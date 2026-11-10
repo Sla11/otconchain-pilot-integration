@@ -1,0 +1,193 @@
+{
+  "exampleOnly": true,
+  "notice": "Static historical mock-address fixtures. maker-fixture is a disposable teaching identity, not real maker prices or an approved wallet. No active ticket, endpoint or transaction. The primary receipt uses explicit illustrative cost assumptions. The unknown-cost variant cannot pass execution preparation until the minimum-net policy is evaluated.",
+  "createRequest": {
+    "clientRequestId": "terminal-fixture-001",
+    "workspaceId": "workspace-fixture",
+    "clientOrganizationId": "institution-fixture",
+    "mode": "sandbox",
+    "chainId": 1337,
+    "sellToken": "0x2222222222222222222222222222222222222222",
+    "buyToken": "0x3333333333333333333333333333333333333333",
+    "sellAmount": "10000000000000000000",
+    "minimumNetBuyAmount": "29900000000",
+    "clientWallet": "0x099e6e0073d12DF35Dc937666A0Da7613f022Bac",
+    "permittedMakerIds": [
+      "maker-fixture"
+    ],
+    "returnTargetId": "terminal-project"
+  },
+  "opened": {
+    "requestId": "pilot-request-fixture-001",
+    "clientRequestId": "terminal-fixture-001",
+    "workspaceId": "workspace-fixture",
+    "clientOrganizationId": "institution-fixture",
+    "termsVersion": 1,
+    "version": 1,
+    "mode": "sandbox",
+    "auctionState": "open",
+    "executionState": "not_started",
+    "chainId": 1337,
+    "clientWallet": "0x099e6e0073d12DF35Dc937666A0Da7613f022Bac",
+    "sellToken": "0x2222222222222222222222222222222222222222",
+    "buyToken": "0x3333333333333333333333333333333333333333",
+    "sellAmount": "10000000000000000000",
+    "minimumNetBuyAmount": "29900000000",
+    "opensAt": 1791971990,
+    "closesAt": 1791972030,
+    "minimumQuoteExpiry": 1791972060,
+    "responsesReceived": 0,
+    "eligibleResponses": 0,
+    "competitionMode": "single_maker",
+    "selectedQuoteId": null,
+    "portalActionAvailable": true,
+    "receiptAvailable": false,
+    "latestEventSequence": 1
+  },
+  "selected": {
+    "requestId": "pilot-request-fixture-001",
+    "clientRequestId": "terminal-fixture-001",
+    "workspaceId": "workspace-fixture",
+    "clientOrganizationId": "institution-fixture",
+    "termsVersion": 1,
+    "version": 3,
+    "mode": "sandbox",
+    "auctionState": "selected",
+    "executionState": "not_started",
+    "chainId": 1337,
+    "clientWallet": "0x099e6e0073d12DF35Dc937666A0Da7613f022Bac",
+    "sellToken": "0x2222222222222222222222222222222222222222",
+    "buyToken": "0x3333333333333333333333333333333333333333",
+    "sellAmount": "10000000000000000000",
+    "minimumNetBuyAmount": "29900000000",
+    "opensAt": 1791971990,
+    "closesAt": 1791972030,
+    "minimumQuoteExpiry": 1791972060,
+    "responsesReceived": 1,
+    "eligibleResponses": 1,
+    "competitionMode": "single_maker",
+    "selectedQuoteId": "quote-local-001",
+    "portalActionAvailable": true,
+    "receiptAvailable": true,
+    "latestEventSequence": 3
+  },
+  "handoffRequest": {
+    "termsVersion": 1,
+    "returnTargetId": "terminal-project"
+  },
+  "handoff": {
+    "handoffId": "handoff-fixture-001",
+    "requestId": "pilot-request-fixture-001",
+    "expiresAt": 1791972100,
+    "actionUrl": "https://portal.otconchain.invalid/v1/pilot/handoff",
+    "method": "POST",
+    "fields": {
+      "ticket": "fixture-only-non-executable-ticket-not-a-real-secret"
+    }
+  },
+  "events": {
+    "events": [
+      {
+        "eventId": "event-fixture-1",
+        "requestId": "pilot-request-fixture-001",
+        "sequence": 1,
+        "occurredAt": 1791971990,
+        "type": "auction.opened",
+        "auctionState": "open",
+        "executionState": "not_started",
+        "requestVersion": 1
+      },
+      {
+        "eventId": "event-fixture-2",
+        "requestId": "pilot-request-fixture-001",
+        "sequence": 2,
+        "occurredAt": 1791972030,
+        "type": "auction.closed",
+        "auctionState": "closed",
+        "executionState": "not_started",
+        "requestVersion": 2
+      },
+      {
+        "eventId": "event-fixture-3",
+        "requestId": "pilot-request-fixture-001",
+        "sequence": 3,
+        "occurredAt": 1791972040,
+        "type": "quote.selected",
+        "auctionState": "selected",
+        "executionState": "not_started",
+        "requestVersion": 3
+      }
+    ],
+    "nextSequence": 3,
+    "hasMore": false
+  },
+  "receipt": {
+    "schemaVersion": "partner-receipt/0.1.0-draft",
+    "mode": "sandbox",
+    "receiptId": "pilot-receipt-fixture-001",
+    "requestId": "pilot-request-fixture-001",
+    "receiptVersion": 1,
+    "generatedAt": 1791972040,
+    "auctionState": "selected",
+    "executionState": "not_started",
+    "selectedQuote": {
+      "makerId": "maker-fixture",
+      "quoteId": "quote-local-001",
+      "orderHash": "0x952e55e0717321a0aaefd09fcfca1c82695e3b62cd181662406b0ffc0504ba86",
+      "sellAmount": "10000000000000000000",
+      "grossBuyAmount": "30000000000",
+      "expiry": "1791972300"
+    },
+    "costComparison": {
+      "rankingBasis": "net_proceeds",
+      "economicComparison": "estimated",
+      "grossBuyAmount": "30000000000",
+      "platformChargeBuyUnits": "0",
+      "gasEstimateBuyUnits": "100000",
+      "estimatedNetBuyAmount": "29999900000",
+      "conversionSource": "Fixed teaching-fixture gas conversion; not a live feed or actual charge",
+      "conversionSampledAt": 1791972030,
+      "benchmark": null
+    },
+    "executionEvidence": null
+  },
+  "unknownCostReceipt": {
+    "schemaVersion": "partner-receipt/0.1.0-draft",
+    "mode": "sandbox",
+    "receiptId": "pilot-receipt-fixture-unknown-cost",
+    "requestId": "pilot-request-fixture-001",
+    "receiptVersion": 1,
+    "generatedAt": 1791972040,
+    "auctionState": "selected",
+    "executionState": "not_started",
+    "selectedQuote": {
+      "makerId": "maker-fixture",
+      "quoteId": "quote-local-001",
+      "orderHash": "0x952e55e0717321a0aaefd09fcfca1c82695e3b62cd181662406b0ffc0504ba86",
+      "sellAmount": "10000000000000000000",
+      "grossBuyAmount": "30000000000",
+      "expiry": "1791972300"
+    },
+    "costComparison": {
+      "rankingBasis": "gross_output",
+      "economicComparison": "unavailable",
+      "grossBuyAmount": "30000000000",
+      "platformChargeBuyUnits": null,
+      "gasEstimateBuyUnits": null,
+      "estimatedNetBuyAmount": null,
+      "conversionSource": null,
+      "conversionSampledAt": null,
+      "benchmark": null
+    },
+    "executionEvidence": null
+  },
+  "cancelRequest": {
+    "reason": "Test participant cancelled before executable disclosure"
+  },
+  "error": {
+    "code": "RECONCILIATION_REQUIRED",
+    "message": "The disclosed execution may still be valid; inspect canonical execution state.",
+    "retryable": false,
+    "correlationId": "error-fixture-001"
+  }
+}

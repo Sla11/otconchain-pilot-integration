@@ -1,0 +1,274 @@
+{
+  "schemaVersion": "0.1.0-draft",
+  "notice": "Proposed test matrix; every result starts unrun. No partner sign-off or live activation.",
+  "cases": [
+    {
+      "id": "AUTH-01",
+      "owner": "otconchain",
+      "mode": "sandbox",
+      "expected": "Valid terminal credential creates only an allowed client/workspace request.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "AUTH-02",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Wrong scope or cross-organization access rejects without leaking resource existence.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "AUTH-03",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "No browser bundle, URL, log or analytics contains a machine credential or handoff secret.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "AUTH-04",
+      "owner": "otconchain",
+      "mode": "sandbox",
+      "expected": "Replay timestamp and rate-limit rejection produce no partial request.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "REQ-01",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Identical retry and lost-response recovery resolve to the same original request.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "REQ-02",
+      "owner": "otconchain",
+      "mode": "sandbox",
+      "expected": "Changed terms under the same HTTP key or partner correlation return 409.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "REQ-03",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Unsupported chain, pair, decimals or amount is rejected, never silently substituted.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "HANDOFF-01",
+      "owner": "terminal",
+      "mode": "sandbox",
+      "expected": "Allowlisted form POST binds the correct request; repeated/expired ticket returns 410.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "HANDOFF-02",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Wrong organization or wallet cannot see confidential terms or approve the trade.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "MAKER-01",
+      "owner": "maker",
+      "mode": "sandbox",
+      "expected": "A genuine desk sandbox response verifies against actual authorized signer and exact native terms.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "MAKER-02",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Indicative, decline, timeout and late replies cannot enable execution.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "MAKER-03",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Wrong domain, proxy, pair, amount, taker, executor or expiry fails native/policy validation.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "MAKER-04",
+      "owner": "maker",
+      "mode": "sandbox",
+      "expected": "Cancellation and signer revocation are observed; outstanding signed exposure remains tracked.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "CLIENT-01",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Wallet rejection/portal exit creates no submitted or settled record.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "CLIENT-02",
+      "owner": "otconchain",
+      "mode": "sandbox",
+      "expected": "One durable disclosure lease; repeated preparation does not expose a second executable quote.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "CLIENT-03",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Expired/stale preparation or unknown net-cost policy blocks authorization preparation.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "CLIENT-04",
+      "owner": "otconchain",
+      "mode": "sandbox",
+      "expected": "Cancellation after executable disclosure or while outcome is pending returns reconciliation required.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "EXEC-01",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Agreed proxy and test assets perform the full requested native fill; match both token movements.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "EXEC-02",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Insufficient balance/allowance and reverted calls produce truthful non-settlement states.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "EXEC-03",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Lost response, duplicate submission reporting and transaction replacement do not create a second economic trade.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "EVIDENCE-01",
+      "owner": "otconchain",
+      "mode": "sandbox",
+      "expected": "Confirmed requires exact native fill, supported-token transfers, canonical block and configured confirmations.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "EVIDENCE-02",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Reorg withdraws prior confirmation and increments receipt revision with retained lineage.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "EVENT-01",
+      "owner": "terminal",
+      "mode": "sandbox",
+      "expected": "Deduplicate/reorder events and recover from disconnect or expired cursor using canonical status.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "SHADOW-01",
+      "owner": "joint",
+      "mode": "shadow",
+      "expected": "Shadow never releases executable payload, requests trade approval, broadcasts or fabricates settlement.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "DISCLOSURE-01",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Client sees affiliated terminal/desk role and the single-maker label.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    },
+    {
+      "id": "DISCLOSURE-02",
+      "owner": "joint",
+      "mode": "sandbox",
+      "expected": "Independent-maker stage is blocked until separate consent and bid-access isolation pass.",
+      "status": "unrun",
+      "evidenceReference": "",
+      "defectOwner": "",
+      "reviewedBy": ""
+    }
+  ],
+  "approval": {
+    "otconchainTechnical": "",
+    "makerDesk": "",
+    "terminalTechnical": "",
+    "sandboxApproved": false,
+    "shadowApproved": false,
+    "realAssetsAllowed": false
+  }
+}

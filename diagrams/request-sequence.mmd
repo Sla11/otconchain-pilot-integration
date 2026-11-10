@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+    actor Client as Institution
+    participant Terminal as Terminal backend
+    participant API as OTConChain coordinator
+    participant Desk as Maker service
+    participant Portal as Client portal
+    participant Chain as Test-chain proxy
+    Client->>Terminal: Approved pair, exact amount, minimum
+    Terminal->>API: POST request (scoped identity + idempotency)
+    API->>Desk: Exact RFQ and auction deadline
+    Desk-->>API: Firm signed order / indicative / decline
+    Terminal->>API: POST handoff for the same request
+    API-->>Terminal: Short-lived one-use POST ticket
+    Terminal->>Portal: Top-level form POST
+    Client->>Portal: Sign in; verify organization and EOA
+    Portal->>API: Select eligible offer; acquire disclosure lease
+    API-->>Portal: Validated and simulated full-fill transaction
+    Client->>Chain: Approve exact spender; authorize fill
+    API->>Chain: Observe fill, transfers and confirmations
+    Terminal->>API: Poll canonical status and receipt
+    API-->>Terminal: Versioned selected-trade evidence

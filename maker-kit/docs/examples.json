@@ -1,0 +1,65 @@
+{
+  "request": {
+    "requestId": "local-example-001",
+    "chainId": 1337,
+    "sellToken": "0x2222222222222222222222222222222222222222",
+    "buyToken": "0x3333333333333333333333333333333333333333",
+    "sellAmount": "10000000000000000000",
+    "taker": "0x099e6e0073d12DF35Dc937666A0Da7613f022Bac",
+    "executor": "0x099e6e0073d12DF35Dc937666A0Da7613f022Bac",
+    "requestedValiditySeconds": 300,
+    "auction": {
+      "auctionId": "auction-local-001",
+      "opensAt": 1791971990,
+      "closesAt": 1791972030,
+      "minimumQuoteExpiry": 1791972060,
+      "rulesVersion": "1.0.0-draft"
+    }
+  },
+  "firm": {
+    "requestId": "local-example-001",
+    "quoteId": "quote-local-001",
+    "status": "firm",
+    "domain": {
+      "name": "ZeroEx",
+      "version": "1.0.0",
+      "chainId": 1337,
+      "verifyingContract": "0x1111111111111111111111111111111111111111"
+    },
+    "order": {
+      "makerToken": "0x3333333333333333333333333333333333333333",
+      "takerToken": "0x2222222222222222222222222222222222222222",
+      "makerAmount": "30000000000",
+      "takerAmount": "10000000000000000000",
+      "maker": "0xe2c77Ee30F945e19946b30F3d4673f3Aa0a06a95",
+      "taker": "0x099e6e0073d12DF35Dc937666A0Da7613f022Bac",
+      "txOrigin": "0x099e6e0073d12DF35Dc937666A0Da7613f022Bac",
+      "pool": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "expiry": "1791972300",
+      "salt": "1196471760727630268776179880395542820505334902319"
+    },
+    "signature": {
+      "signatureType": 2,
+      "v": 27,
+      "r": "0x3e5ab49cc1e1a6d7ac34b9454c57e17dcd302cd180299b6d4f0423e624b8789e",
+      "s": "0x24f64131b9887a5656585429f6e156e2f924646ffe2927e29876cdf2a8681d8f"
+    }
+  },
+  "declined": {
+    "requestId": "local-example-001",
+    "status": "declined",
+    "reason": "Outside configured inventory limits"
+  },
+  "order": {
+    "makerToken": "0x3333333333333333333333333333333333333333",
+    "takerToken": "0x2222222222222222222222222222222222222222",
+    "makerAmount": "30000000000",
+    "takerAmount": "10000000000000000000",
+    "maker": "0xe2c77Ee30F945e19946b30F3d4673f3Aa0a06a95",
+    "taker": "0x099e6e0073d12DF35Dc937666A0Da7613f022Bac",
+    "txOrigin": "0x099e6e0073d12DF35Dc937666A0Da7613f022Bac",
+    "pool": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "expiry": "1791972300",
+    "salt": "1196471760727630268776179880395542820505334902319"
+  }
+}

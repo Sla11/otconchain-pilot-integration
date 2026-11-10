@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="650" viewBox="0 0 1120 650" role="img" aria-labelledby="title desc">
+<title id="title">Pilot integration architecture</title><desc id="desc">Separate terminal and maker services connect to OTConChain. The institution authorizes test-chain settlement from its EOA. The terminal reads selected-trade evidence.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#87c9d9"/></marker></defs>
+<rect width="1120" height="650" rx="18" fill="#0b1016"/>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#eaf0f5} .muted{fill:#a4b0bf} .accent{fill:#87c9d9} .line{stroke:#87c9d9;stroke-width:2;fill:none;marker-end:url(#arrow)} .box{fill:#131c26;stroke:#344654;stroke-width:1.5}</style>
+<text x="38" y="48" font-size="13" class="accent">PILOT INTEGRATION / ARCHITECTURE</text>
+<text x="38" y="89" font-size="30" class="">One workflow. Separate authorities.</text>
+<rect class="box" x="38" y="138" width="270" height="155" rx="12"/>
+<text x="58" y="166" font-size="12" class="accent">REQUEST &amp; CONTEXT</text>
+<text x="58" y="193" font-size="21" class="">Trading terminal</text>
+<text x="58" y="222" font-size="15" class="muted">Originate exact request</text>
+<text x="58" y="245" font-size="15" class="muted">Authenticated backend</text>
+<text x="58" y="268" font-size="15" class="muted">Read status and receipt</text>
+<rect class="box" x="425" y="138" width="270" height="155" rx="12"/>
+<text x="445" y="166" font-size="12" class="accent">WORKFLOW &amp; EVIDENCE</text>
+<text x="445" y="193" font-size="21" class="">OTConChain</text>
+<text x="445" y="222" font-size="15" class="muted">Validate and coordinate</text>
+<text x="445" y="245" font-size="15" class="muted">Retain disclosure lease</text>
+<text x="445" y="268" font-size="15" class="muted">Reconcile execution</text>
+<rect class="box" x="812" y="138" width="270" height="155" rx="12"/>
+<text x="832" y="166" font-size="12" class="accent">PRICING &amp; INVENTORY</text>
+<text x="832" y="193" font-size="21" class="">Maker service</text>
+<text x="832" y="222" font-size="15" class="muted">Price and sign native RFQ</text>
+<text x="832" y="245" font-size="15" class="muted">Retain inventory control</text>
+<text x="832" y="268" font-size="15" class="muted">Manage signed exposure</text>
+<path class="line" d="M308 200H425"/><path class="line" d="M695 176H812"/><text x="728" y="161" font-size="13" class="accent">RFQ</text><path class="line" d="M812 219H695"/><text x="326" y="186" font-size="13" class="accent">Request</text>
+<text x="708" y="204" font-size="13" class="accent">Signed quote</text>
+<rect class="box" x="38" y="395" width="270" height="158" rx="12"/>
+<text x="58" y="423" font-size="12" class="accent">HUMAN REVIEW</text>
+<text x="58" y="450" font-size="21" class="">Client portal</text>
+<text x="58" y="479" font-size="15" class="muted">OTConChain sign-in</text>
+<text x="58" y="502" font-size="15" class="muted">Organization + EOA checks</text>
+<text x="58" y="525" font-size="15" class="muted">Explicit quote selection</text>
+<rect class="box" x="425" y="395" width="270" height="158" rx="12"/>
+<text x="445" y="423" font-size="12" class="accent">WALLET AUTHORITY</text>
+<text x="445" y="450" font-size="21" class="">Institution EOA</text>
+<text x="445" y="479" font-size="15" class="muted">Review exact transaction</text>
+<text x="445" y="502" font-size="15" class="muted">Approve verified spender</text>
+<text x="445" y="525" font-size="15" class="muted">Authorize full test fill</text>
+<rect class="box" x="812" y="395" width="270" height="158" rx="12"/>
+<text x="832" y="423" font-size="12" class="accent">SETTLEMENT</text>
+<text x="832" y="450" font-size="21" class="">Native test proxy</text>
+<text x="832" y="479" font-size="15" class="muted">One chain / approved pair</text>
+<text x="832" y="502" font-size="15" class="muted">Atomic fill and transfers</text>
+<text x="832" y="525" font-size="15" class="muted">Observed chain evidence</text>
+<path class="line" d="M173 293V395"/><path class="line" d="M560 293V338H250V395"/><path class="line" d="M308 471H425"/><path class="line" d="M695 471H812"/><path class="line" d="M947 395V333H650V293"/><text x="190" y="320" font-size="13" class="accent">One-use POST handoff</text>
+<text x="332" y="365" font-size="13" class="muted">Selected offer</text>
+<text x="38" y="602" font-size="16" class="muted">Sandbox: test assets only. Shadow: execution disabled. Single maker: workflow validation.</text>
+</svg>

@@ -1,0 +1,375 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "OTConChain proposed maker adapter",
+    "version": "1.0.0-draft",
+    "description": "Proposed server-to-server interface, not a deployed public API. Auction metadata remains offchain. Native signed-order types are unchanged. Local examples use chain 1337 and mock assets."
+  },
+  "paths": {
+    "/rfqs/v1/quote": {
+      "post": {
+        "operationId": "requestNativeRfq",
+        "summary": "Request a native signed quote or a clear indicative/declined response",
+        "description": "Requests must be idempotent. Reuse with changed terms must fail. quoteId/requestId are offchain IDs. The protocol order hash binds execution. Firm quotes do not escrow inventory.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Quote response. Only firm status authorizes the execution preparation path.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/FirmQuote"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OtherResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid terms"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflicting reuse of request ID"
+          },
+          "429": {
+            "description": "Request limit exceeded"
+          },
+          "503": {
+            "description": "Quoting unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Equal to requestId. Changed terms under the same identifier return 409."
+          },
+          {
+            "in": "header",
+            "name": "X-Request-Timestamp",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Unix seconds; proposed replay tolerance 60 seconds."
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Draft HTTPS profile: per-maker scoped server-side token. Agree provisioning/rotation before external integration."
+      }
+    },
+    "schemas": {
+      "QuoteRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requestId",
+          "chainId",
+          "sellToken",
+          "buyToken",
+          "sellAmount",
+          "taker",
+          "executor",
+          "requestedValiditySeconds",
+          "auction"
+        ],
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "chainId": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sellToken": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "buyToken": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "sellAmount": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$",
+            "description": "Positive uint128 in base units; exact numeric range must be checked, not only the pattern."
+          },
+          "taker": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "executor": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "requestedValiditySeconds": {
+            "type": "integer",
+            "minimum": 30,
+            "maximum": 600
+          },
+          "auction": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "auctionId",
+              "opensAt",
+              "closesAt",
+              "minimumQuoteExpiry",
+              "rulesVersion"
+            ],
+            "properties": {
+              "auctionId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "opensAt": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "closesAt": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "minimumQuoteExpiry": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "rulesVersion": {
+                "type": "string",
+                "enum": [
+                  "1.0.0-draft"
+                ]
+              }
+            },
+            "description": "Unix-second application timing. opensAt < closesAt < minimumQuoteExpiry. These values are not native EIP-712 order fields."
+          }
+        }
+      },
+      "NativeOrder": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "makerToken",
+          "takerToken",
+          "maker",
+          "taker",
+          "txOrigin",
+          "makerAmount",
+          "takerAmount",
+          "expiry",
+          "salt",
+          "pool"
+        ],
+        "properties": {
+          "makerToken": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "takerToken": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "maker": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "taker": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "txOrigin": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "makerAmount": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          },
+          "takerAmount": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          },
+          "expiry": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          },
+          "salt": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          },
+          "pool": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          }
+        }
+      },
+      "Domain": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "version",
+          "chainId",
+          "verifyingContract"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "ZeroEx"
+            ]
+          },
+          "version": {
+            "type": "string",
+            "enum": [
+              "1.0.0"
+            ]
+          },
+          "chainId": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "verifyingContract": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          }
+        }
+      },
+      "NativeSignature": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "signatureType",
+          "v",
+          "r",
+          "s"
+        ],
+        "properties": {
+          "signatureType": {
+            "type": "integer",
+            "enum": [
+              2
+            ]
+          },
+          "v": {
+            "type": "integer",
+            "enum": [
+              27,
+              28
+            ]
+          },
+          "r": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "s": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          }
+        }
+      },
+      "FirmQuote": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requestId",
+          "quoteId",
+          "status",
+          "domain",
+          "order",
+          "signature"
+        ],
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "quoteId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "firm"
+            ]
+          },
+          "domain": {
+            "$ref": "#/components/schemas/Domain"
+          },
+          "order": {
+            "$ref": "#/components/schemas/NativeOrder"
+          },
+          "signature": {
+            "$ref": "#/components/schemas/NativeSignature"
+          }
+        }
+      },
+      "OtherResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requestId",
+          "status",
+          "reason"
+        ],
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "quoteId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "indicative",
+              "declined"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "indicativeBuyAmount": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          }
+        }
+      }
+    }
+  }
+}

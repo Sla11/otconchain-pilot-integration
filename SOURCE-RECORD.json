@@ -1,0 +1,13 @@
+{
+  "publicationEdition": "2026-11-10",
+  "origin": "OTConChain generic pilot documentation, reviewed 2026-10-28",
+  "contractStatus": "draft-for-joint-review",
+  "artifacts": {
+    "contracts/partner.openapi.json": "fecd6b4eb2112cbe9566a96f16e441aee26eecff369e2876004cb3f5f25380e5",
+    "contracts/maker-adapter.openapi.json": "3296da00d71bee912a51fc7b0057081c009cb080232f5441b270bbf6b3e395bd",
+    "examples/partner.json": "3ed988d617facb0249c90a5e79b849f8689a1ca0745fd3d94b549bdb898f7ca6",
+    "examples/maker.json": "be5da4377ac6d3cdd38b24239b23127b39aae154375279b503eb2cca838e269e",
+    "config/pilot-environment.example.json": "232d558322cab6d5ad323d2a973d928347abe1a2a6a8dad464e32d5e70aff560",
+    "acceptance/matrix.json": "f135bbe5de6193e07de2e73e07bb881bf7f6eac2b3905e0e59e2ce31b4698534"
+  }
+}

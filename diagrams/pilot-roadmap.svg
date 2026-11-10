@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="850" viewBox="0 0 1120 850" role="img" aria-labelledby="title desc">
+<title id="title">Pilot integration delivery roadmap</title><desc id="desc">Six ordered gates with owners and evidence: agree, exercise locally, implement, connect sandbox, evaluate shadow and review outcome.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#87c9d9"/></marker></defs>
+<rect width="1120" height="850" rx="18" fill="#0b1016"/>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#eaf0f5} .muted{fill:#a4b0bf} .accent{fill:#87c9d9} .line{stroke:#87c9d9;stroke-width:2;fill:none;marker-end:url(#arrow)} .box{fill:#131c26;stroke:#344654;stroke-width:1.5}</style>
+<text x="38" y="48" font-size="13" class="accent">PILOT INTEGRATION / DELIVERY GATES</text>
+<text x="38" y="89" font-size="30" class="">Build the connection. Prove the outcome.</text>
+<rect class="box" x="38" y="130" width="499" height="175" rx="12"/>
+<text x="58" y="158" font-size="12" class="accent">G0</text>
+<text x="58" y="185" font-size="21" class="">Agree scope</text>
+<text x="58" y="214" font-size="15" class="muted">Joint owners</text>
+<text x="58" y="237" font-size="15" class="muted">One chain, pair and EOA</text>
+<text x="58" y="260" font-size="15" class="muted">Limits, consent and configuration</text>
+<rect class="box" x="583" y="130" width="499" height="175" rx="12"/>
+<text x="603" y="158" font-size="12" class="accent">G1</text>
+<text x="603" y="185" font-size="21" class="">Exercise locally</text>
+<text x="603" y="214" font-size="15" class="muted">Engineering</text>
+<text x="603" y="237" font-size="15" class="muted">Contracts, signatures and calldata</text>
+<text x="603" y="260" font-size="15" class="muted">Repeatable local conformance</text>
+<rect class="box" x="38" y="345" width="499" height="175" rx="12"/>
+<text x="58" y="373" font-size="12" class="accent">G2</text>
+<text x="58" y="400" font-size="21" class="">Implement services</text>
+<text x="58" y="429" font-size="15" class="muted">Terminal + desk + OTConChain</text>
+<text x="58" y="452" font-size="15" class="muted">Coordinator, portal and adapters</text>
+<text x="58" y="475" font-size="15" class="muted">Durable identity and exposure</text>
+<rect class="box" x="583" y="345" width="499" height="175" rx="12"/>
+<text x="603" y="373" font-size="12" class="accent">G3</text>
+<text x="603" y="400" font-size="21" class="">Connect sandbox</text>
+<text x="603" y="429" font-size="15" class="muted">Joint technical owners</text>
+<text x="603" y="452" font-size="15" class="muted">Genuine services and test wallets</text>
+<text x="603" y="475" font-size="15" class="muted">Acceptance and recovery evidence</text>
+<rect class="box" x="38" y="560" width="499" height="175" rx="12"/>
+<text x="58" y="588" font-size="12" class="accent">G4</text>
+<text x="58" y="615" font-size="21" class="">Evaluate shadow</text>
+<text x="58" y="644" font-size="15" class="muted">Desk + consenting institutions</text>
+<text x="58" y="667" font-size="15" class="muted">Realistic requests; execution off</text>
+<text x="58" y="690" font-size="15" class="muted">Latency, effort and workflow quality</text>
+<rect class="box" x="583" y="560" width="499" height="175" rx="12"/>
+<text x="603" y="588" font-size="12" class="accent">G5</text>
+<text x="603" y="615" font-size="21" class="">Review together</text>
+<text x="603" y="644" font-size="15" class="muted">Technical + operational owners</text>
+<text x="603" y="667" font-size="15" class="muted">Resolve defects and commercial fit</text>
+<text x="603" y="690" font-size="15" class="muted">Agree the next scoped decision</text>
+<path class="line" d="M537 217H583"/><path class="line" d="M833 305V326H288V345"/><path class="line" d="M537 432H583"/><path class="line" d="M833 520V541H288V560"/><path class="line" d="M537 647H583"/><text x="38" y="787" font-size="17" class="muted">Progress is gated by evidence. Local tests do not establish joint acceptance.</text>
+<text x="38" y="817" font-size="15" class="muted">Independent multi-maker competition and real-asset work require separate scope.</text>
+</svg>

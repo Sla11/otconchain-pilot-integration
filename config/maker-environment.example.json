@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0.0-draft",
+  "stage": "sandbox",
+  "notice": "Empty fields are undecided, never production defaults. Do not include private keys or authentication secrets.",
+  "owners": {
+    "technical": "",
+    "deskRisk": "",
+    "incident": ""
+  },
+  "environment": {
+    "chainId": null,
+    "rpcProvisioningOwner": "",
+    "exchangeProxy": "",
+    "verificationRecord": "",
+    "sellToken": {
+      "address": "",
+      "decimals": null
+    },
+    "buyToken": {
+      "address": "",
+      "decimals": null
+    }
+  },
+  "service": {
+    "sandboxBaseUrl": "",
+    "authProfile": "scoped-bearer-v1",
+    "secureCredentialDeliveryChannel": "",
+    "requestsPerSecond": null,
+    "responseDeadlineSeconds": null,
+    "idempotencyRetentionSeconds": null
+  },
+  "wallets": {
+    "mode": "direct-eoa",
+    "makerInventory": "",
+    "makerSigner": "",
+    "signerAuthorizationTransaction": "",
+    "taker": "",
+    "executor": ""
+  },
+  "policy": {
+    "quoteValiditySeconds": null,
+    "bidWindowSeconds": null,
+    "acceptanceHeadroomSeconds": null,
+    "maximumSellAmountBaseUnits": "",
+    "outstandingExposureRule": "",
+    "replacementAndCancellation": "",
+    "confirmationAndReorgPolicy": ""
+  },
+  "acceptance": {
+    "onboardingOwner": "",
+    "sandboxCriteria": "",
+    "liveStageApproved": false
+  }
+}

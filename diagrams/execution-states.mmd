@@ -1,0 +1,14 @@
+stateDiagram-v2
+    [*] --> not_started
+    not_started --> awaiting_authorization: Selected envelope prepared
+    awaiting_authorization --> submitted: Actual transaction observed
+    submitted --> mined: Successful matching fill and transfers
+    submitted --> reverted: Failed receipt observed
+    submitted --> dropped: Authoritative reconciliation
+    mined --> confirmed: Agreed confirmation policy
+    mined --> reorged: Block no longer canonical
+    confirmed --> reorged: Accepted block invalidated
+    reorged --> submitted: Resume reconciliation
+    reorged --> mined: Matching canonical receipt
+    reverted --> [*]
+    dropped --> [*]

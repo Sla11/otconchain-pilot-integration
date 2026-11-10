@@ -1,0 +1,8 @@
+flowchart LR
+    A["Maker signs native RFQ"] --> B["Validate exact terms and signer"]
+    B --> C["Acquire persistent disclosure lease"]
+    C --> D["Simulate exact full-fill call"]
+    D --> E["Client reviews and authorizes"]
+    E --> F["Verified proxy on test chain"]
+    F --> G["Match fill and both transfers"]
+    G --> H["Apply agreed confirmation policy"]

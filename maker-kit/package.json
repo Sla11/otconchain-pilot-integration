@@ -1,0 +1,1 @@
+{"name":"otconchain-local-integration-kit","version":"1.0.0-draft","private":true,"type":"module","engines":{"node":">=22"},"scripts":{"test":"node --test test/*.test.mjs","start":"node src/maker.mjs"},"dependencies":{"ethers":"6.15.0"}}

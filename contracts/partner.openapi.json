@@ -1,0 +1,1992 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "OTConChain proposed terminal handoff pilot",
+    "version": "0.1.0-draft",
+    "description": "Draft contracts only: no hosted server, no approved Desk & Terminal Pilot integration, no real-asset authorization. Partner software does not select/sign/broadcast. Native maker API remains 1.0.0-draft."
+  },
+  "servers": [
+    {
+      "url": "https://pilot-api.otconchain.invalid",
+      "description": "Reserved documentation placeholder, not a running sandbox."
+    }
+  ],
+  "paths": {
+    "/v1/pilot/capabilities": {
+      "get": {
+        "operationId": "getPilotCapabilities",
+        "summary": "get Pilot Capabilities",
+        "security": [
+          {
+            "partnerBearer": []
+          }
+        ],
+        "x-required-scope": "capabilities:read",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Authorized canonical result or identical replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Capabilities"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid terms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Missing or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Replay conflict or unsafe state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Expired handoff or retained cursor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited; honor Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pilot/requests": {
+      "post": {
+        "operationId": "createPilotRequest",
+        "summary": "create Pilot Request",
+        "security": [
+          {
+            "partnerBearer": []
+          }
+        ],
+        "x-required-scope": "requests:write",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/RequestTimestamp"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authorized canonical result or identical replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestStatus"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "New frozen request created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid terms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Missing or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Replay conflict or unsafe state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Expired handoff or retained cursor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited; honor Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pilot/requests/{requestId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/RequestId"
+        }
+      ],
+      "get": {
+        "operationId": "getPilotRequest",
+        "summary": "get Pilot Request",
+        "security": [
+          {
+            "partnerBearer": []
+          }
+        ],
+        "x-required-scope": "requests:read",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Authorized canonical result or identical replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid terms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Missing or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Replay conflict or unsafe state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Expired handoff or retained cursor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited; honor Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pilot/requests/{requestId}/handoffs": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/RequestId"
+        }
+      ],
+      "post": {
+        "operationId": "createClientHandoff",
+        "summary": "create Client Handoff",
+        "security": [
+          {
+            "partnerBearer": []
+          }
+        ],
+        "x-required-scope": "handoffs:write",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/RequestTimestamp"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HandoffRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authorized canonical result or identical replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Handoff"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid terms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Missing or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Replay conflict or unsafe state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Expired handoff or retained cursor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited; honor Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pilot/requests/{requestId}/events": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/RequestId"
+        }
+      ],
+      "get": {
+        "operationId": "getPilotEvents",
+        "summary": "get Pilot Events",
+        "security": [
+          {
+            "partnerBearer": []
+          }
+        ],
+        "x-required-scope": "requests:read",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "afterSequence",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "default": 0
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized canonical result or identical replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid terms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Missing or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Replay conflict or unsafe state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Expired handoff or retained cursor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited; honor Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pilot/requests/{requestId}/cancel": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/RequestId"
+        }
+      ],
+      "post": {
+        "operationId": "cancelPilotRequest",
+        "summary": "cancel Pilot Request",
+        "security": [
+          {
+            "partnerBearer": []
+          }
+        ],
+        "x-required-scope": "requests:write",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/RequestTimestamp"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authorized canonical result or identical replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid terms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Missing or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Replay conflict or unsafe state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Expired handoff or retained cursor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited; honor Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pilot/requests/{requestId}/receipt": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/RequestId"
+        }
+      ],
+      "get": {
+        "operationId": "getPilotReceipt",
+        "summary": "get Pilot Receipt",
+        "security": [
+          {
+            "partnerBearer": []
+          }
+        ],
+        "x-required-scope": "receipts:read",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Authorized canonical result or identical replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid terms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Missing or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Replay conflict or unsafe state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Expired handoff or retained cursor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited; honor Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "partnerBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Scoped server-only machine credential mapped to approved partner/workspace/client organizations; never a wallet approval."
+      }
+    },
+    "parameters": {
+      "IdempotencyKey": {
+        "in": "header",
+        "name": "Idempotency-Key",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "RequestTimestamp": {
+        "in": "header",
+        "name": "X-Request-Timestamp",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "description": "Unix seconds"
+        }
+      },
+      "RequestId": {
+        "in": "path",
+        "name": "requestId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      }
+    },
+    "schemas": {
+      "Capabilities": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "contractVersion",
+          "modes",
+          "walletModes",
+          "approvedChains",
+          "maximumSellAmount",
+          "minimumPollSeconds",
+          "handoffTtlSeconds",
+          "idempotencyRetentionSeconds",
+          "eventRetentionSeconds",
+          "allowedMakerIds",
+          "competitionModes",
+          "rulesVersion"
+        ],
+        "properties": {
+          "contractVersion": {
+            "type": "string",
+            "enum": [
+              "0.1.0-draft"
+            ]
+          },
+          "modes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "sandbox",
+                "shadow"
+              ]
+            }
+          },
+          "walletModes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "direct_eoa"
+              ]
+            }
+          },
+          "approvedChains": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "chainId",
+                "proxy",
+                "verificationRecord",
+                "assets"
+              ],
+              "properties": {
+                "chainId": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "proxy": {
+                  "type": "string",
+                  "description": "Configured EVM address; mock examples are not approved deployments.",
+                  "pattern": "^0x[0-9a-fA-F]{40}$"
+                },
+                "verificationRecord": {
+                  "type": "string"
+                },
+                "assets": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "address",
+                      "symbol",
+                      "decimals"
+                    ],
+                    "properties": {
+                      "address": {
+                        "type": "string",
+                        "description": "Configured EVM address; mock examples are not approved deployments.",
+                        "pattern": "^0x[0-9a-fA-F]{40}$"
+                      },
+                      "symbol": {
+                        "type": "string"
+                      },
+                      "decimals": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 36
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "maximumSellAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "minimumPollSeconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "handoffTtlSeconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "idempotencyRetentionSeconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "eventRetentionSeconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "allowedMakerIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "competitionModes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "single_maker",
+                "competitive"
+              ]
+            }
+          },
+          "rulesVersion": {
+            "type": "string"
+          }
+        },
+        "description": "Return only the jointly approved configuration. This documentation supplies no deployed capabilities endpoint."
+      },
+      "CreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "clientRequestId",
+          "workspaceId",
+          "clientOrganizationId",
+          "mode",
+          "chainId",
+          "sellToken",
+          "buyToken",
+          "sellAmount",
+          "minimumNetBuyAmount",
+          "clientWallet",
+          "permittedMakerIds",
+          "returnTargetId"
+        ],
+        "properties": {
+          "clientRequestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "workspaceId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "clientOrganizationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "sandbox",
+              "shadow"
+            ]
+          },
+          "chainId": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "sellToken": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "buyToken": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "sellAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "minimumNetBuyAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          },
+          "clientWallet": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "permittedMakerIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "minItems": 1,
+            "maxItems": 1,
+            "uniqueItems": true
+          },
+          "returnTargetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "description": "Freeze exact terms. Workspace/organization/maker permissions are derived from credential mappings, not trusted from these claims. Sell and buy token must differ."
+      },
+      "RequestStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requestId",
+          "clientRequestId",
+          "workspaceId",
+          "clientOrganizationId",
+          "termsVersion",
+          "version",
+          "mode",
+          "auctionState",
+          "executionState",
+          "chainId",
+          "clientWallet",
+          "sellToken",
+          "buyToken",
+          "sellAmount",
+          "minimumNetBuyAmount",
+          "opensAt",
+          "closesAt",
+          "minimumQuoteExpiry",
+          "responsesReceived",
+          "eligibleResponses",
+          "competitionMode",
+          "selectedQuoteId",
+          "portalActionAvailable",
+          "receiptAvailable",
+          "latestEventSequence"
+        ],
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "clientRequestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "workspaceId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "clientOrganizationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "termsVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Immutable terms version; modifications require a new safely separated request."
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Monotonic per-request lifecycle revision."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "sandbox",
+              "shadow"
+            ]
+          },
+          "auctionState": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed",
+              "selected",
+              "no_valid_quotes",
+              "expired",
+              "cancelled"
+            ]
+          },
+          "executionState": {
+            "type": "string",
+            "enum": [
+              "not_started",
+              "awaiting_authorization",
+              "submitted",
+              "mined",
+              "confirmed",
+              "reverted",
+              "dropped",
+              "reorged"
+            ]
+          },
+          "chainId": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "clientWallet": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "sellToken": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "buyToken": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "sellAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "minimumNetBuyAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          },
+          "opensAt": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Unix seconds"
+          },
+          "closesAt": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Unix seconds"
+          },
+          "minimumQuoteExpiry": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Unix seconds"
+          },
+          "responsesReceived": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "eligibleResponses": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "competitionMode": {
+            "type": "string",
+            "enum": [
+              "single_maker",
+              "competitive"
+            ]
+          },
+          "selectedQuoteId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "nullable": true
+          },
+          "portalActionAvailable": {
+            "type": "boolean"
+          },
+          "receiptAvailable": {
+            "type": "boolean"
+          },
+          "latestEventSequence": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "description": "No raw maker signatures or losing-quote payloads. Expiry does not settle an unknown submitted transaction. Shadow mode must remain not_started."
+      },
+      "HandoffRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "termsVersion",
+          "returnTargetId"
+        ],
+        "properties": {
+          "termsVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "returnTargetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      },
+      "Handoff": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "handoffId",
+          "requestId",
+          "expiresAt",
+          "actionUrl",
+          "method",
+          "fields"
+        ],
+        "properties": {
+          "handoffId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "expiresAt": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Unix seconds; separate from native quote expiry."
+          },
+          "actionUrl": {
+            "type": "string",
+            "description": "Allowlisted OTConChain portal origin/path, no ticket or sensitive terms in the URL.",
+            "format": "uri"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "POST"
+            ]
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ticket"
+            ],
+            "properties": {
+              "ticket": {
+                "type": "string",
+                "description": "Single-use, audience- and request-bound secret. Static fixture is not a valid ticket.",
+                "minLength": 32
+              }
+            }
+          }
+        },
+        "description": "Sensitive no-store response. Submit as top-level form POST. Redemption does not bypass client sign-in, organization or wallet policy."
+      },
+      "CancelRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "reason"
+        ],
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "Business reason, excluding secrets or sensitive documents.",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        }
+      },
+      "Event": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "eventId",
+          "requestId",
+          "sequence",
+          "occurredAt",
+          "type",
+          "auctionState",
+          "executionState",
+          "requestVersion"
+        ],
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "occurredAt": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Unix seconds"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "auction.opened",
+              "auction.closed",
+              "auction.no_valid_quotes",
+              "quote.selected",
+              "auction.expired",
+              "auction.cancelled",
+              "execution.awaiting_authorization",
+              "execution.submitted",
+              "execution.mined",
+              "execution.confirmed",
+              "execution.reverted",
+              "execution.dropped",
+              "execution.reorged"
+            ]
+          },
+          "auctionState": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed",
+              "selected",
+              "no_valid_quotes",
+              "expired",
+              "cancelled"
+            ]
+          },
+          "executionState": {
+            "type": "string",
+            "enum": [
+              "not_started",
+              "awaiting_authorization",
+              "submitted",
+              "mined",
+              "confirmed",
+              "reverted",
+              "dropped",
+              "reorged"
+            ]
+          },
+          "requestVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        }
+      },
+      "EventPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "events",
+          "nextSequence",
+          "hasMore"
+        ],
+        "properties": {
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            }
+          },
+          "nextSequence": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SelectedQuote": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "makerId",
+          "quoteId",
+          "orderHash",
+          "sellAmount",
+          "grossBuyAmount",
+          "expiry"
+        ],
+        "properties": {
+          "makerId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "quoteId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "orderHash": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "sellAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "grossBuyAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "expiry": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          }
+        },
+        "description": "Only the client-selected offer. Raw native order/signature stays in the client portal execution path."
+      },
+      "Benchmark": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "sampledAt",
+          "comparableSellAmount",
+          "executable",
+          "indicativeBuyAmount",
+          "assumptions"
+        ],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "sampledAt": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Unix seconds"
+          },
+          "comparableSellAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "executable": {
+            "type": "boolean"
+          },
+          "indicativeBuyAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "assumptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CostComparison": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "rankingBasis",
+          "economicComparison",
+          "grossBuyAmount",
+          "platformChargeBuyUnits",
+          "gasEstimateBuyUnits",
+          "estimatedNetBuyAmount",
+          "conversionSource",
+          "conversionSampledAt",
+          "benchmark"
+        ],
+        "properties": {
+          "rankingBasis": {
+            "type": "string",
+            "enum": [
+              "net_proceeds",
+              "gross_output"
+            ]
+          },
+          "economicComparison": {
+            "type": "string",
+            "enum": [
+              "estimated",
+              "unavailable"
+            ]
+          },
+          "grossBuyAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$",
+            "nullable": true
+          },
+          "platformChargeBuyUnits": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "nullable": true
+          },
+          "gasEstimateBuyUnits": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "nullable": true
+          },
+          "estimatedNetBuyAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "nullable": true
+          },
+          "conversionSource": {
+            "type": "string",
+            "nullable": true
+          },
+          "conversionSampledAt": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "nullable": true
+          },
+          "benchmark": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Benchmark"
+              },
+              {
+                "type": "object",
+                "nullable": true,
+                "enum": [
+                  null
+                ]
+              }
+            ]
+          }
+        },
+        "description": "All comparison quantities use buy-token base units. Unknown costs remain null; gross output cannot satisfy a minimum-net constraint until cost policy evaluates it."
+      },
+      "FillEvidence": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderHash",
+          "proxy",
+          "maker",
+          "taker",
+          "makerToken",
+          "takerToken",
+          "makerAmount",
+          "takerAmount"
+        ],
+        "properties": {
+          "orderHash": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "proxy": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "maker": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "taker": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "makerToken": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "takerToken": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "makerAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "takerAmount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$"
+          }
+        }
+      },
+      "TokenTransfer": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "token",
+          "from",
+          "to",
+          "amount"
+        ],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "from": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "to": {
+            "type": "string",
+            "description": "Configured EVM address; mock examples are not approved deployments.",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Canonical nonnegative integer base-unit string; enforce token decimals and uint128 range separately.",
+            "pattern": "^[1-9][0-9]*$"
+          }
+        }
+      },
+      "ExecutionEvidence": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "chainId",
+          "transactionHash",
+          "replaces",
+          "observedAt",
+          "blockNumber",
+          "blockHash",
+          "confirmations",
+          "confirmationPolicyVersion",
+          "canonical",
+          "fill",
+          "transfers"
+        ],
+        "properties": {
+          "chainId": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "transactionHash": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "replaces": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$",
+            "nullable": true
+          },
+          "observedAt": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Unix seconds"
+          },
+          "blockNumber": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "nullable": true
+          },
+          "blockHash": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$",
+            "nullable": true
+          },
+          "confirmations": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "nullable": true
+          },
+          "confirmationPolicyVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "canonical": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "fill": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/FillEvidence"
+              },
+              {
+                "type": "object",
+                "nullable": true,
+                "enum": [
+                  null
+                ]
+              }
+            ]
+          },
+          "transfers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TokenTransfer"
+            }
+          }
+        },
+        "description": "Actual observed submission/chain evidence only. Confirmed requires matching canonical fill/transfers and the configured confirmation threshold; enforce these invariants server-side."
+      },
+      "Receipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "mode",
+          "receiptId",
+          "requestId",
+          "receiptVersion",
+          "generatedAt",
+          "auctionState",
+          "executionState",
+          "selectedQuote",
+          "costComparison",
+          "executionEvidence"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "enum": [
+              "partner-receipt/0.1.0-draft"
+            ]
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "sandbox",
+              "shadow"
+            ]
+          },
+          "receiptId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "receiptVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "generatedAt": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991,
+            "description": "Unix seconds"
+          },
+          "auctionState": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed",
+              "selected",
+              "no_valid_quotes",
+              "expired",
+              "cancelled"
+            ]
+          },
+          "executionState": {
+            "type": "string",
+            "enum": [
+              "not_started",
+              "awaiting_authorization",
+              "submitted",
+              "mined",
+              "confirmed",
+              "reverted",
+              "dropped",
+              "reorged"
+            ]
+          },
+          "selectedQuote": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SelectedQuote"
+              },
+              {
+                "type": "object",
+                "nullable": true,
+                "enum": [
+                  null
+                ]
+              }
+            ]
+          },
+          "costComparison": {
+            "$ref": "#/components/schemas/CostComparison"
+          },
+          "executionEvidence": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExecutionEvidence"
+              },
+              {
+                "type": "object",
+                "nullable": true,
+                "enum": [
+                  null
+                ]
+              }
+            ]
+          }
+        },
+        "description": "A pending report is valid, but must not be labeled settled. Evidence stays null before an observed submission. Shadow never has executable or chain evidence. A reorg revises the receipt."
+      },
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "message",
+          "retryable",
+          "correlationId"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "correlationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      }
+    }
+  }
+}
